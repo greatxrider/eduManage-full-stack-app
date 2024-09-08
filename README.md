@@ -1,4 +1,4 @@
-# eduManage, a Full Stack Course Management Application
+# eduManage, a full stack course management application
 
 This project is a Full Stack Course Management Application that allows users to view, create, update, and delete courses. It is built using a REST API for the backend and a React-based client interface for the frontend.
 
