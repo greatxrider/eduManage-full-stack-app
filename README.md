@@ -55,63 +55,6 @@ The Full Stack Course Management Application consists of two main components:
    ```bash
    git clone https://github.com/yourusername/full-stack-course-management-app.git
    cd full-stack-course-management-app
-# Full Stack Course Management Application
-
-This project is a Full Stack Course Management Application that allows users to view, create, update, and delete courses. It is built using a REST API for the backend and a React-based client interface for the frontend.
-
-## Table of Contents
-
-- [eduManage, a Full Stack Course Management Application](#edumanage-a-full-stack-course-management-application)
-  - [Table of Contents](#table-of-contents)
-  - [Overview](#overview)
-    - [Key Features](#key-features)
-  - [Installation](#installation)
-    - [Prerequisites](#prerequisites)
-    - [Setup Instructions](#setup-instructions)
-  - [Usage](#usage)
-  - [Basic Authentication](#basic-authentication)
-    - [How to Use Basic Authentication](#how-to-use-basic-authentication)
-  - [API Endpoints](#api-endpoints)
-    - [User Endpoints](#user-endpoints)
-    - [Course Endpoints](#course-endpoints)
-  - [Technologies Used](#technologies-used)
-  - [Project Structure](#project-structure)
-  - [Additional Notes](#additional-notes)
-  - [License](#license)
-  - [Contact](#contact)
-
-## Overview
-
-The Full Stack Course Management Application consists of two main components:
-
-1. **Client**: A React application built with Vite that provides a user-friendly interface for managing courses. It features authentication, course management, routing, and state management.
-
-2. **API**: A RESTful API built using Node.js, Express, Sequelize, and SQLite. The API handles requests from the client, performing operations on the database, and supports Basic Authentication for user security.
-
-### Key Features
-
-- **View All Courses**: Users can view a list of all available courses.
-- **Course Detail View**: Displays detailed information for each course.
-- **User Authentication**: Basic Authentication using username and password.
-- **Create, Update, Delete Courses**: Authenticated users can manage courses.
-- **Protected Routes**: Ensures only authenticated users can access certain routes.
-- **Error Handling**: Comprehensive validation and error handling for both client and server sides.
-
-## Installation
-
-### Prerequisites
-
-- Node.js (version 14 or later)
-- npm (version 6 or later)
-- Git
-
-### Setup Instructions
-
-1. **Clone the Repository:**
-
-   ```bash
-   git clone https://github.com/yourusername/full-stack-course-management-app.git
-   cd full-stack-course-management-app
    ```
 
 2. **Install API Dependencies:**
