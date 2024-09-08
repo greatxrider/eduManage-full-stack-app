@@ -4,7 +4,7 @@ This project is a Full Stack Course Management Application that allows users to 
 
 ## Table of Contents
 
-- [eduManage, a Full Stack Course Management Application](#edumanage-a-full-stack-course-management-application)
+- [eduManage, a full stack course management application](#edumanage-a-full-stack-course-management-application)
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
     - [Key Features](#key-features)
@@ -62,7 +62,6 @@ The Full Stack Course Management Application consists of two main components:
     Navigate to the API folder and install the necessary packages.
 
     ```bash
-    Copy code
     cd api
     npm install
     ```
@@ -80,26 +79,24 @@ The Full Stack Course Management Application consists of two main components:
 Create a .env file in the /api directory and add the required environment variables:
     ```bash
     env
-    Copy code
     PORT=5000
     DATABASE_URL=sqlite::memory:
     ```
 
-5. **Run Database Migrations:**
+1. **Run Database Migrations:**
 
     Use Sequelize CLI to set up the database by running migrations.
         ```bash
         npx sequelize-cli db:migrate
         ```
 
-6. **Run the Applications:**
+2. **Run the Applications:**
 
     In separate terminals, start both the API and Client applications:
 
     API:
 
     ```bash
-    Copy code
     cd api
     npm start
     ```
@@ -107,7 +104,6 @@ Create a .env file in the /api directory and add the required environment variab
     Client:
 
     ```bash
-    Copy code
     cd client
     npm run dev
     ```
