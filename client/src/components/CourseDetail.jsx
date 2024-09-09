@@ -19,6 +19,8 @@ const CourseDetail = () => {
         } else if (response.status === 400) {
             const data = await response.json();
             throw new Error(data.error);
+        } else if (response.status === 401) {
+            navigate("/forbidden");
         }
     };
 
@@ -68,9 +70,9 @@ const CourseDetail = () => {
                                 <ul className="course--detail--list">
                                     {course.materialsNeeded
                                         .split('\n')
-                                        .filter(material => material.trim() !== '') // Filter out empty or whitespace-only lines
+                                        .filter(material => material.trim() !== '')
                                         .map((material, index) => (
-                                            <li key={index}>{material.trim()}</li> // Trim each material to remove leading/trailing spaces
+                                            <li key={index}>{material.trim()}</li>
                                         ))}
                                 </ul>
                             ) : (
