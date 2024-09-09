@@ -58,7 +58,7 @@ const CourseDetail = () => {
                 <div className="wrap">
                     <a className="button" href={`/courses/${id}/update`}>Update Course</a>
                     <a className="button" href="#">Delete Course</a>
-                    <a className="button button-secondary" href="index.html">Return to List</a>
+                    <a className="button button-secondary" href="/">Return to List</a>
                 </div>
             </div>
             <div className="wrap">
