@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
 import { api } from '../utils/apiHelper';
 
 import Loading from './Loading';
@@ -44,6 +43,11 @@ const UpdateCourse = () => {
         }
     };
 
+    const handleCancel = (event) => {
+        event.preventDefault();
+        navigate("/");
+    }
+
     useEffect(() => {
         fetchCourse();
     }, [id]);
@@ -81,7 +85,7 @@ const UpdateCourse = () => {
                     <button className="button" type="submit">Update
                         Course</button><button
                             className="button button-secondary"
-                            onClick="event.preventDefault(); location.href='index.html';">Cancel</button>
+                            onClick={handleCancel}>Cancel</button>
                 </form>
             </div>
         </main>
