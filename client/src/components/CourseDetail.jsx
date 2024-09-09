@@ -2,12 +2,15 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { api } from '../utils/apiHelper';
 
+import Loading from './Loading';
+
 const CourseDetail = () => {
     const navigate = useNavigate();
     const { id } = useParams();
 
     // State
     const [course, setCourse] = useState({});
+    const [loading, setLoading] = useState(true);
 
     const handleApiResponse = async (response) => {
         if (response.status === 200) {
@@ -35,12 +38,18 @@ const CourseDetail = () => {
         } catch (error) {
             console.log(error);
             navigate("/error");
+        } finally {
+            setLoading(false);
         }
     };
 
     useEffect(() => {
         fetchCourse();
     }, [id]);
+
+    if (loading) {
+        return (<Loading />);
+    }
 
     return (
         <main>
