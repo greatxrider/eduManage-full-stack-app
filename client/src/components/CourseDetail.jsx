@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 import { api } from '../utils/apiHelper';
 
 import Loading from './Loading';
@@ -68,22 +69,15 @@ const CourseDetail = () => {
                             <h3 className="course--detail--title">Course</h3>
                             <h4 className="course--name">{course.title}</h4>
                             <p>By {course.user?.firstName} {course.user?.lastName}</p>
-                            <p>{course.description ? course.description : 'Not available'}</p>
+                            <ReactMarkdown>{course.description && course.description.trim() ? course.description : 'Not available'}</ReactMarkdown>
                         </div>
                         <div>
                             <h3 className="course--detail--title">Estimated Time</h3>
                             <p>{course.estimatedTime ? course.estimatedTime : 'Not available'}</p>
 
                             <h3 className="course--detail--title">Materials Needed</h3>
-                            {course.materialsNeeded ? (
-                                <ul className="course--detail--list">
-                                    {course.materialsNeeded
-                                        .split('\n')
-                                        .filter(material => material.trim() !== '')
-                                        .map((material, index) => (
-                                            <li key={index}>{material.trim()}</li>
-                                        ))}
-                                </ul>
+                            {course.materialsNeeded && course.materialsNeeded.trim() ? (
+                                <ReactMarkdown className="course--detail--list">{course.materialsNeeded}</ReactMarkdown>
                             ) : (
                                 <p>Not available</p>
                             )}
