@@ -1,6 +1,7 @@
 'use strict';
 
 var createError = require('http-errors');
+const cors = require('cors');
 const express = require('express');
 const morgan = require('morgan');
 var path = require('path');
@@ -16,7 +17,11 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/usersRouter');
 var coursesRouter = require('./routes/coursesRouter');
 
+// Create the Express app
 var app = express();
+
+// Enable All CORS Requests
+app.use(cors());
 
 // setup morgan which gives us http request logging
 app.use(morgan('dev'));
