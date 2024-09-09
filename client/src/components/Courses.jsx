@@ -2,11 +2,14 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../utils/apiHelper';
 
+import Loading from './Loading';
+
 const Courses = () => {
     const navigate = useNavigate();
 
     // State
     const [courses, setCourses] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const handleApiResponse = async (response) => {
         if (response.status === 200) {
@@ -32,12 +35,18 @@ const Courses = () => {
         } catch (error) {
             console.log(error);
             navigate("/error");
+        } finally {
+            setLoading(false);
         }
     };
 
     useEffect(() => {
         fetchCourses();
     }, []);
+
+    if (loading) {
+        return <Loading />; // Render the Loading component while loading
+    }
 
     return (
         <div className="wrap main--grid">
