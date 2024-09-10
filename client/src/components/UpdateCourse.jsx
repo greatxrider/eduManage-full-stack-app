@@ -9,7 +9,7 @@ import ErrorsDisplay from './ErrorsDisplay';
 const UpdateCourse = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-    const { authUser, password } = useContext(UserContext);
+    const { authUser, password, actions } = useContext(UserContext);
 
     const [course, setCourse] = useState({});
     const [loading, setLoading] = useState(true);
@@ -21,17 +21,20 @@ const UpdateCourse = () => {
     const materialsNeeded = useRef(null);
 
     const handleApiResponse = async (response) => {
+        const data = await response.json();
         if (response.status === 200) {
-            const data = await response.json();
             return data;
         } else if (response.status === 304) {
             console.log('Resource not modified, using cached version.');
             return null;
         } else if (response.status === 400) {
-            const data = await response.json();
-            throw new Error(data.error);
+            throw new Error(data.error || 'Bad Request');
         } else if (response.status === 401) {
+            navigate("/signin");
+            throw new Error('Unauthorized');
+        } else if (response.status === 403) {
             navigate("/forbidden");
+            throw new Error('Forbidden');
         } else {
             throw new Error('Unexpected error');
         }
@@ -79,6 +82,9 @@ const UpdateCourse = () => {
                 setErrors(data.errors);
             } else if (response.status === 403) {
                 navigate('/forbidden');
+            } else if (response.status === 401) {
+                actions.signOut();
+                navigate('/signin');
             } else {
                 throw new Error('Unexpected error');
             }

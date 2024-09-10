@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { api } from '../utils/apiHelper';
 
@@ -9,13 +9,13 @@ import Loading from './Loading';
 const CourseDetail = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-    const { authUser, password } = useContext(UserContext);
+    const { authUser, password, actions } = useContext(UserContext);
 
     // State
     const [course, setCourse] = useState({});
     const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    const [userId, setUserId] = useState(null);
 
     const handleApiResponse = async (response) => {
         if (response.status === 200) {
@@ -38,6 +38,7 @@ const CourseDetail = () => {
             const data = await handleApiResponse(response);
             if (data) {
                 setCourse(data);
+                setUserId(data.userId);
                 console.log('Course is successfully fetched!');
             }
         } catch (error) {
@@ -55,17 +56,27 @@ const CourseDetail = () => {
         };
 
         try {
-            const response = await api(`/courses/${id}`, "DELETE", user);
+            const response = await api(`/courses/${id}`, "DELETE", null, user);
             if (response.status === 204) {
                 console.log(`Course id:${id} is successfully deleted!`);
                 navigate('/');
-            } else if (response.status === 400) {
-                const data = await response.json();
-                setErrors(data.errors);
-            } else if (response.status === 403) {
-                navigate('/forbidden');
             } else {
-                throw new Error('Unexpected error');
+                const data = await response.json();
+                if (response.status === 400) {
+                    setErrors(data.errors);
+                    console.log(data.errors);
+                } else if (response.status === 403) {
+                    setErrors(data.errors);
+                    console.log(data.errors);
+                    navigate('/forbidden');
+                } else if (response.status === 401) {
+                    setErrors(data.errors);
+                    console.log(data.errors);
+                    actions.signOut();
+                    navigate('/signin');
+                } else {
+                    throw new Error('Unexpected error');
+                }
             }
         } catch (error) {
             console.log(error);
@@ -77,7 +88,7 @@ const CourseDetail = () => {
 
     useEffect(() => {
         fetchCourse();
-    }, [id]);
+    }, [id, userId]);
 
     if (loading) {
         return (<Loading />);
@@ -87,9 +98,13 @@ const CourseDetail = () => {
         <main>
             <div className="actions--bar">
                 <div className="wrap">
-                    <a className="button" href={`/courses/${id}/update`}>Update Course</a>
-                    <a className="button" onClick={deleteCourse}>Delete Course</a>
-                    <a className="button button-secondary" href="/">Return to List</a>
+                    {authUser && authUser.id === userId ? (
+                        <>
+                            <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
+                            <button className="button" onClick={deleteCourse} aria-label="Delete Course">Delete Course</button>
+                        </>
+                    ) : null}
+                    <Link className="button button-secondary" to="/">Return to List</Link>
                 </div>
             </div>
             <div className="wrap">
