@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../utils/apiHelper';
 
+import ThemeContext from '../context/ThemeContext';
 import Loading from './Loading';
 
 /**
@@ -11,6 +12,7 @@ import Loading from './Loading';
  */
 const Courses = () => {
     const navigate = useNavigate();
+    const { accentColor } = useContext(ThemeContext);
 
     // State
     const [courses, setCourses] = useState([]);
@@ -86,7 +88,7 @@ const Courses = () => {
     return (
         <div className="wrap main--grid">
             {courses.map((course) => (
-                <a key={course.id} className="course--module course--link" href={`/courses/${course.id}`}>
+                <a key={course.id} className="course--module course--link" href={`/courses/${course.id}`} style={{ background: accentColor }}>
                     <h2 className="course--label">Course</h2>
                     <h3 className="course--title">{course.title}</h3>
                 </a>

@@ -1,5 +1,6 @@
 import { useContext, useRef, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import ThemeContext from '../context/ThemeContext';
 import UserContext from '../context/UserContext';
 import ErrorsDisplay from './ErrorsDisplay';
 
@@ -10,6 +11,7 @@ import ErrorsDisplay from './ErrorsDisplay';
  */
 const UserSignIn = () => {
     const { actions } = useContext(UserContext);
+    const { accentColor } = useContext(ThemeContext);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -82,16 +84,17 @@ const UserSignIn = () => {
                         ref={password}
                         placeholder="Password"
                     />
-                    <button className="button" type="submit">Sign In</button>
+                    <button className="button" type="submit" style={{ background: accentColor }}>Sign In</button>
                     <button
                         className="button button-secondary"
                         onClick={handleCancel}
+                        style={{ color: accentColor }}
                     >
                         Cancel
                     </button>
                 </form>
                 <p>
-                    Don't have a user account? Click here to <Link to="/signup">sign up</Link>!
+                    Don't have a user account? Click here to <Link to="/signup" style={{ color: accentColor }}>sign up</Link>!
                 </p>
             </div>
         </main>

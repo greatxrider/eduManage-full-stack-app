@@ -58,7 +58,7 @@ header li {
 }
 
 header nav a {
-    color: #dbd;
+    color: rgb(221, 221, 221);
 }
 
 header nav a:hover {

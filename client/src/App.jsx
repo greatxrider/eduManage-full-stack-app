@@ -14,6 +14,7 @@ import NotFound from './components/NotFound';
 import Error from './components/Error';
 import Forbidden from './components/Forbidden';
 import Footer from './components/Footer';
+import Settings from './components/Settings';
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         <Route element={<PrivateRoute />}>
           <Route path="/courses/create" element={<CreateCourse />} />
           <Route path="/courses/:id/update" element={<UpdateCourse />} />
+          <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="/forbidden" element={<Forbidden />} />
         <Route path="/error" element={<Error />} />

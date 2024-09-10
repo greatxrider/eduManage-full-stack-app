@@ -21,6 +21,7 @@ const Nav = () => {
                     <nav>
                         <ul className="header--signedin">
                             <li><span>Welcome, {authUser.firstName} {authUser.lastName}!</span></li>
+                            <li><Link className="settings" to="/settings">Settings</Link></li>
                             <li><Link className="signout" to="/signout">Sign Out</Link></li>
                         </ul>
                     </nav>

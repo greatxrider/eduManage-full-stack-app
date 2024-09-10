@@ -2,6 +2,7 @@ import { useContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../utils/apiHelper';
 
+import ThemeContext from '../context/ThemeContext';
 import UserContext from '../context/UserContext';
 import ErrorsDisplay from './ErrorsDisplay';
 
@@ -12,6 +13,7 @@ import ErrorsDisplay from './ErrorsDisplay';
  */
 const CreateCourse = () => {
     const { authUser, password } = useContext(UserContext);
+    const { accentColor } = useContext(ThemeContext);
     const navigate = useNavigate();
 
     // State
@@ -135,8 +137,8 @@ const CreateCourse = () => {
                                 name="materialsNeeded" ref={materialsNeeded}></textarea>
                         </div>
                     </div>
-                    <button className="button" type="submit">Create Course</button>
-                    <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
+                    <button className="button" type="submit" style={{ background: accentColor }}>Create Course</button>
+                    <button className="button button-secondary" onClick={handleCancel} style={{ color: accentColor }}>Cancel</button>
                 </form>
             </div>
         </main>

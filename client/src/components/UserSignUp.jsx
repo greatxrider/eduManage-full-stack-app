@@ -2,6 +2,7 @@ import { useContext, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../utils/apiHelper';
 
+import ThemeContext from '../context/ThemeContext';
 import UserContext from '../context/UserContext';
 import ErrorsDisplay from './ErrorsDisplay';
 
@@ -12,6 +13,7 @@ import ErrorsDisplay from './ErrorsDisplay';
  */
 const UserSignUp = () => {
     const { actions } = useContext(UserContext);
+    const { accentColor } = useContext(ThemeContext);
     const navigate = useNavigate();
 
     // State
@@ -108,16 +110,17 @@ const UserSignUp = () => {
                         ref={password}
                         placeholder="Password"
                     />
-                    <button className="button" type="submit">Sign Up</button>
+                    <button className="button" type="submit" style={{ background: accentColor }}>Sign Up</button>
                     <button
                         className="button button-secondary"
                         type="button"
                         onClick={handleCancel}
+                        style={{ color: accentColor }}
                     >
                         Cancel
                     </button>
                 </form>
-                <p>Already have a user account? Click here to <Link to="/signin">sign in</Link>!</p>
+                <p>Already have a user account? Click here to <Link to="/signin" style={{ color: accentColor }}>sign in</Link>!</p>
             </div>
         </main>
     );

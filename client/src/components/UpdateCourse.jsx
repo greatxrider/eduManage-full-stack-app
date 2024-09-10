@@ -1,6 +1,8 @@
 import { useState, useEffect, useContext, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { api } from '../utils/apiHelper';
+
+import ThemeContext from '../context/ThemeContext';
 import UserContext from '../context/UserContext';
 
 import Loading from './Loading';
@@ -15,6 +17,7 @@ const UpdateCourse = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const { authUser, password } = useContext(UserContext);
+    const { accentColor } = useContext(ThemeContext);
 
     const [course, setCourse] = useState({});
     const [loading, setLoading] = useState(true);
@@ -182,8 +185,8 @@ const UpdateCourse = () => {
                             ></textarea>
                         </div>
                     </div>
-                    <button className="button" type="submit">Update Course</button>
-                    <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
+                    <button className="button" type="submit" style={{ background: accentColor }}>Update Course</button>
+                    <button className="button button-secondary" onClick={handleCancel} style={{ color: accentColor }}>Cancel</button>
                 </form>
             </div>
         </main>

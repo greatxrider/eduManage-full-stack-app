@@ -3,6 +3,7 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { api } from '../utils/apiHelper';
 
+import ThemeContext from '../context/ThemeContext';
 import UserContext from '../context/UserContext';
 import Loading from './Loading';
 
@@ -16,6 +17,7 @@ const CourseDetail = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const { authUser, password } = useContext(UserContext);
+    const { accentColor } = useContext(ThemeContext);
 
     // State
     const [course, setCourse] = useState({});
@@ -125,11 +127,11 @@ const CourseDetail = () => {
                 <div className="wrap">
                     {authUser && authUser.id === userId ? (
                         <>
-                            <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
-                            <button className="button" onClick={deleteCourse} aria-label="Delete Course">Delete Course</button>
+                            <Link className="button" to={`/courses/${id}/update`} style={{ background: accentColor }}>Update Course</Link>
+                            <button className="button" onClick={deleteCourse} aria-label="Delete Course" style={{ background: accentColor }}>Delete Course</button>
                         </>
                     ) : null}
-                    <Link className="button button-secondary" to="/">Return to List</Link>
+                    <Link className="button button-secondary" to="/" style={{ color: accentColor }}>Return to List</Link>
                 </div>
             </div>
             <div className="wrap">
@@ -138,7 +140,7 @@ const CourseDetail = () => {
                     <div className="main--flex" key={course.id}>
                         <div>
                             <h3 className="course--detail--title">Course</h3>
-                            <h4 className="course--name">{course.title}</h4>
+                            <h4 className="course--name" style={{ color: accentColor }}>{course.title}</h4>
                             <p>By {course.user?.firstName} {course.user?.lastName}</p>
                             <ReactMarkdown>{course.description && course.description.trim() ? course.description : 'Not available'}</ReactMarkdown>
                         </div>
