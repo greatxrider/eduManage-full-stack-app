@@ -1,17 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { api } from '../utils/apiHelper';
 
+import UserContext from '../context/UserContext';
 import Loading from './Loading';
 
 const CourseDetail = () => {
     const navigate = useNavigate();
     const { id } = useParams();
+    const { authUser, password } = useContext(UserContext);
 
     // State
     const [course, setCourse] = useState({});
+    const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(true);
+
 
     const handleApiResponse = async (response) => {
         if (response.status === 200) {
@@ -44,6 +48,33 @@ const CourseDetail = () => {
         }
     };
 
+    const deleteCourse = async () => {
+        const user = {
+            username: authUser.emailAddress,
+            password: password
+        };
+
+        try {
+            const response = await api(`/courses/${id}`, "DELETE", user);
+            if (response.status === 204) {
+                console.log(`Course id:${id} is successfully deleted!`);
+                navigate('/');
+            } else if (response.status === 400) {
+                const data = await response.json();
+                setErrors(data.errors);
+            } else if (response.status === 403) {
+                navigate('/forbidden');
+            } else {
+                throw new Error('Unexpected error');
+            }
+        } catch (error) {
+            console.log(error);
+            navigate("/error");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
         fetchCourse();
     }, [id]);
@@ -57,7 +88,7 @@ const CourseDetail = () => {
             <div className="actions--bar">
                 <div className="wrap">
                     <a className="button" href={`/courses/${id}/update`}>Update Course</a>
-                    <a className="button" href="#">Delete Course</a>
+                    <a className="button" onClick={deleteCourse}>Delete Course</a>
                     <a className="button button-secondary" href="/">Return to List</a>
                 </div>
             </div>
