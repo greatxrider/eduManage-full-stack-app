@@ -6,7 +6,7 @@ import UserContext from '../context/UserContext';
 import ErrorsDisplay from './ErrorsDisplay';
 
 const CreateCourse = () => {
-    const { authUser } = useContext(UserContext);
+    const { authUser, password } = useContext(UserContext);
     const navigate = useNavigate();
 
     // State
@@ -23,14 +23,15 @@ const CreateCourse = () => {
 
         const user = {
             username: authUser.emailAddress,
-            password: authUser.password
+            password: password
         }
 
         const course = {
             title: title.current.value,
             description: description.current.value,
             estimatedTime: estimatedTime.current.value,
-            materialsNeeded: materialsNeeded.current.value
+            materialsNeeded: materialsNeeded.current.value,
+            userId: authUser.id
         }
 
         try {
