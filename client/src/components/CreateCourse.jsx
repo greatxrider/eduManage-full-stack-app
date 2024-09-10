@@ -5,6 +5,11 @@ import { api } from '../utils/apiHelper';
 import UserContext from '../context/UserContext';
 import ErrorsDisplay from './ErrorsDisplay';
 
+/**
+ * CreateCourse component handles the creation of a new course.
+ * 
+ * @component
+ */
 const CreateCourse = () => {
     const { authUser, password } = useContext(UserContext);
     const navigate = useNavigate();
@@ -17,7 +22,49 @@ const CreateCourse = () => {
 
     const [errors, setErrors] = useState([]);
 
-    // event handlers
+    /**
+     * Handles the API response and processes different status codes.
+     * 
+     * @param {Response} response - The response object from the fetch API.
+     * @returns {Object|null} - The parsed JSON data or null.
+     * @throws {Error} - Throws an error for unexpected status codes.
+     */
+    const handleApiResponse = async (response) => {
+        let data;
+
+        if (response.status !== 204) {
+            data = await response.json();
+        }
+
+        if (response.status === 200) {
+            return data;
+        } else if (response.status === 204) {
+            return null;
+        } else if (response.status === 304) {
+            console.log('Resource not modified, using cached version.');
+            return null;
+        } else if (response.status === 400) {
+            setErrors(data.errors);
+            console.log(errors);
+        } else if (response.status === 401) {
+            navigate("/signin");
+            throw new Error('Unauthorized');
+        } else if (response.status === 403) {
+            setErrors(data.errors);
+            console.log(errors);
+            navigate('/forbidden');
+        } else {
+            throw new Error('Unexpected error');
+        }
+    };
+
+    /**
+     * Handles the form submission to create a new course.
+     * 
+     * @param {Event} event - The form submission event.
+     * @async
+     * @function
+     */
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -39,11 +86,8 @@ const CreateCourse = () => {
             if (response.status === 201) {
                 console.log(`${course.title} is successfully created!`);
                 navigate("/");
-            } else if (response.status === 400) {
-                const data = await response.json();
-                setErrors(data.errors);
             } else {
-                throw new Error('Unexpected response from server');
+                await handleApiResponse(response);
             }
         } catch (error) {
             console.log(error);
@@ -51,6 +95,11 @@ const CreateCourse = () => {
         }
     }
 
+    /**
+     * Handles the cancel action and navigates back to the home page.
+     * 
+     * @param {Event} event - The cancel button click event.
+     */
     const handleCancel = (event) => {
         event.preventDefault();
         navigate("/");

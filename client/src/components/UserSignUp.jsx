@@ -5,6 +5,11 @@ import { api } from '../utils/apiHelper';
 import UserContext from '../context/UserContext';
 import ErrorsDisplay from './ErrorsDisplay';
 
+/**
+ * UserSignUp component allows users to sign up for a new account.
+ * 
+ * @component
+ */
 const UserSignUp = () => {
     const { actions } = useContext(UserContext);
     const navigate = useNavigate();
@@ -17,7 +22,13 @@ const UserSignUp = () => {
 
     const [errors, setErrors] = useState([]);
 
-    // event handlers
+    /**
+     * Handles the form submission to sign up the user.
+     * 
+     * @param {Event} event - The form submission event.
+     * @async
+     * @function
+     */
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -49,6 +60,11 @@ const UserSignUp = () => {
         }
     }
 
+    /**
+     * Handles the cancel action and navigates back to the home page.
+     * 
+     * @param {Event} event - The cancel button click event.
+     */
     const handleCancel = (event) => {
         event.preventDefault();
         navigate("/");

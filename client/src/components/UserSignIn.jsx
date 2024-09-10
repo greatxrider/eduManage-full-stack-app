@@ -3,6 +3,11 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import ErrorsDisplay from './ErrorsDisplay';
 
+/**
+ * UserSignIn component allows users to sign in to their account.
+ * 
+ * @component
+ */
 const UserSignIn = () => {
     const { actions } = useContext(UserContext);
     const navigate = useNavigate();
@@ -13,7 +18,13 @@ const UserSignIn = () => {
     const password = useRef(null);
     const [errors, setErrors] = useState([]);
 
-    // Event Handlers
+    /**
+     * Handles the form submission to sign in the user.
+     * 
+     * @param {Event} event - The form submission event.
+     * @async
+     * @function
+     */
     const handleSubmit = async (event) => {
         event.preventDefault();
         let from = "/";
@@ -39,6 +50,11 @@ const UserSignIn = () => {
         }
     }
 
+    /**
+     * Handles the cancel action and navigates back to the home page.
+     * 
+     * @param {Event} event - The cancel button click event.
+     */
     const handleCancel = (event) => {
         event.preventDefault();
         navigate("/");

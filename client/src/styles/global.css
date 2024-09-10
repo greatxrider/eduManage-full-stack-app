@@ -324,3 +324,17 @@ textarea:focus {
         transform: rotate(360deg);
     }
 }
+
+/* Footer */
+footer {
+    background-color: #f1f1f1;
+    color: rgb(94, 91, 91);
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    margin-bottom: 0px !important;
+}

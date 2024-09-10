@@ -4,26 +4,61 @@ import { api } from '../utils/apiHelper';
 
 import Loading from './Loading';
 
+/**
+ * Courses component fetches and displays a list of courses.
+ * 
+ * @component
+ */
 const Courses = () => {
     const navigate = useNavigate();
 
     // State
     const [courses, setCourses] = useState([]);
+    const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    /**
+     * Handles the API response and processes different status codes.
+     * 
+     * @param {Response} response - The response object from the fetch API.
+     * @returns {Object|null} - The parsed JSON data or null.
+     * @throws {Error} - Throws an error for unexpected status codes.
+     */
     const handleApiResponse = async (response) => {
+        let data;
+
+        if (response.status !== 204) {
+            data = await response.json();
+        }
+
         if (response.status === 200) {
-            const data = await response.json();
             return data;
+        } else if (response.status === 204) {
+            return null;
         } else if (response.status === 304) {
             console.log('Resource not modified, using cached version.');
             return null;
         } else if (response.status === 400) {
-            const data = await response.json();
-            throw new Error(data.error);
+            setErrors(data.errors);
+            console.log(errors);
+        } else if (response.status === 401) {
+            navigate("/signin");
+            throw new Error('Unauthorized');
+        } else if (response.status === 403) {
+            setErrors(data.errors);
+            console.log(errors);
+            navigate('/forbidden');
+        } else {
+            throw new Error('Unexpected error');
         }
     };
 
+    /**
+     * Fetches the list of courses from the API.
+     * 
+     * @async
+     * @function
+     */
     const fetchCourses = async () => {
         try {
             const response = await api("/courses");

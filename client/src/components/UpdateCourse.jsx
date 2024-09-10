@@ -6,10 +6,15 @@ import UserContext from '../context/UserContext';
 import Loading from './Loading';
 import ErrorsDisplay from './ErrorsDisplay';
 
+/**
+ * UpdateCourse component allows users to update an existing course.
+ * 
+ * @component
+ */
 const UpdateCourse = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-    const { authUser, password, actions } = useContext(UserContext);
+    const { authUser, password } = useContext(UserContext);
 
     const [course, setCourse] = useState({});
     const [loading, setLoading] = useState(true);
@@ -20,26 +25,47 @@ const UpdateCourse = () => {
     const estimatedTime = useRef(null);
     const materialsNeeded = useRef(null);
 
+    /**
+     * Handles the API response and processes different status codes.
+     * 
+     * @param {Response} response - The response object from the fetch API.
+     * @returns {Object|null} - The parsed JSON data or null.
+     * @throws {Error} - Throws an error for unexpected status codes.
+     */
     const handleApiResponse = async (response) => {
-        const data = await response.json();
+        let data;
+        data = await response.json();
+
         if (response.status === 200) {
             return data;
         } else if (response.status === 304) {
             console.log('Resource not modified, using cached version.');
             return null;
         } else if (response.status === 400) {
-            throw new Error(data.error || 'Bad Request');
+            setErrors(data.errors);
+            console.log(errors);
         } else if (response.status === 401) {
             navigate("/signin");
             throw new Error('Unauthorized');
         } else if (response.status === 403) {
-            navigate("/forbidden");
-            throw new Error('Forbidden');
+            setErrors(data.errors);
+            console.log(errors);
+            navigate('/forbidden');
+        } else if (response.status === 404) {
+            setErrors(data.errors);
+            console.log(errors);
+            navigate('/notfound');
         } else {
             throw new Error('Unexpected error');
         }
     };
 
+    /**
+     * Fetches the course details from the API.
+     * 
+     * @async
+     * @function
+     */
     const fetchCourse = async () => {
         try {
             const response = await api(`/courses/${id}`);
@@ -56,6 +82,13 @@ const UpdateCourse = () => {
         }
     };
 
+    /**
+     * Handles the form submission to update the course.
+     * 
+     * @param {Event} event - The form submission event.
+     * @async
+     * @function
+     */
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -77,16 +110,8 @@ const UpdateCourse = () => {
             if (response.status === 204) {
                 console.log('Course is successfully updated!');
                 navigate('/');
-            } else if (response.status === 400) {
-                const data = await response.json();
-                setErrors(data.errors);
-            } else if (response.status === 403) {
-                navigate('/forbidden');
-            } else if (response.status === 401) {
-                actions.signOut();
-                navigate('/signin');
             } else {
-                throw new Error('Unexpected error');
+                await handleApiResponse(response);
             }
         } catch (error) {
             console.log(error);
@@ -96,6 +121,11 @@ const UpdateCourse = () => {
         }
     };
 
+    /**
+     * Handles the cancel action and navigates back to the home page.
+     * 
+     * @param {Event} event - The cancel button click event.
+     */
     const handleCancel = (event) => {
         event.preventDefault();
         navigate("/");

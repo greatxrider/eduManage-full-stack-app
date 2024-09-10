@@ -13,6 +13,7 @@ import PrivateRoute from './components/PrivateRoute';
 import NotFound from './components/NotFound';
 import Error from './components/Error';
 import Forbidden from './components/Forbidden';
+import Footer from './components/Footer';
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
         <Route path="/error" element={<Error />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Footer />
     </div>
   );
 }
