@@ -5,7 +5,7 @@ export const api = (
     credentials = null
 ) => {
 
-    const url = "http://localhost:5000/api" + path;
+    const url = "https://edumanage-full-stack-app-production.up.railway.app/api" + path;
 
     const options = {
         method,
