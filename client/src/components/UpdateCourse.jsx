@@ -74,8 +74,12 @@ const UpdateCourse = () => {
             const response = await api(`/courses/${id}`);
             const data = await handleApiResponse(response);
             if (data) {
-                setCourse(data);
-                console.log('Course is successfully fetched!');
+                if (data.userId !== authUser.id) {
+                    navigate('/forbidden');
+                } else {
+                    setCourse(data);
+                    console.log('Course is successfully fetched!');
+                }
             }
         } catch (error) {
             console.log(error);
