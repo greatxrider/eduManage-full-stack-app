@@ -101,10 +101,16 @@ const CourseDetail = () => {
         };
 
         try {
-            const response = await api(`/courses/${id}`, "DELETE", null, user);
-            await handleApiResponse(response);
-            console.log(`Course id:${id} is successfully deleted!`);
-            navigate('/');
+            if (authUser) {
+                if (authUser.id === userId) {
+                    const response = await api(`/courses/${id}`, "DELETE", null, user);
+                    await handleApiResponse(response);
+                    console.log(`Course id:${id} is successfully deleted!`);
+                    navigate('/');
+                } else {
+                    navigate('/forbidden');
+                }
+            }
         } catch (error) {
             console.log(error);
             navigate("/error");
