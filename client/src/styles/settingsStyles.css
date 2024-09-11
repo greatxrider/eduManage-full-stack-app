@@ -200,10 +200,10 @@ svg {
 }
 
 /* line 5, ../sass/global.sass */
-body {
+/* body {
   font-family: "Work Sans", sans-serif;
   background: #fff;
-}
+} */
 
 /* line 13, ../sass/global.sass */
 .header {
@@ -393,14 +393,14 @@ p {
 }
 
 /* line 116, ../sass/global.sass */
-.course--label {
+/* .course--label {
   font-family: "Cousine";
   font-size: 14px;
   font-weight: 100;
   color: rgba(255, 255, 255, 0.5);
   margin-bottom: 10px;
   font-weight: normal;
-}
+} */
 
 /* line 123, ../sass/global.sass */
 .course--title {
@@ -565,37 +565,37 @@ p {
 }
 
 /* line 229, ../sass/global.sass */
-.course--description h1,
+/* .course--description h1,
 .course--description h2,
 .course--description h3 {
   font-family: "Work Sans", sans-serif;
   color: #222;
   margin-bottom: 30px;
-}
+} */
 
 /* line 235, ../sass/global.sass */
-.course--description h1 {
+/* .course--description h1 {
   font-size: 36px;
-}
+} */
 
 /* line 237, ../sass/global.sass */
-.course--description h2 {
+/* .course--description h2 {
   font-size: 30px;
-}
+} */
 
 /* line 239, ../sass/global.sass */
-.course--description h3 {
+/* .course--description h3 {
   font-size: 24px;
-}
+} */
 
 /* line 241, ../sass/global.sass */
-.course--description h4 {
+/* .course--description h4 {
   font-size: 18px;
   font-weight: 100;
   margin: 0 0 10px;
   color: #999;
   display: block;
-}
+} */
 
 /* line 287, ../sass/global.sass */
 .course--stats--list h4 {
